@@ -15,8 +15,7 @@ extension String {
 }
 
 extension UIImageView {
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
+    func downloaded(from url: URL) {
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -29,8 +28,8 @@ extension UIImageView {
             }
         }.resume()
     }
-    func download(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
+    func download(from link: String) {
         guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
+        downloaded(from: url)
     }
 }

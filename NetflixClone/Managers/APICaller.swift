@@ -158,7 +158,33 @@ class APICaller  {
     }
     
     
-    
+    func getSearchedMovies(completion: @escaping (Result< [Title] , Error>) -> Void){
+        
+//        https://api.themoviedb.org/3/discover/movie?api_key=<<api_key>>&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate
+
+
+        guard let url = URL(string: "\(Constants.baseUrl)/3/discover/movie?api_key=\(Constants.APIKEY)&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate") else {return}
+        
+        let request = URLRequest(url: url)
+        //request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data , error == nil else{
+                 return
+            }
+            
+            do {
+                let results = try JSONDecoder().decode(TrendingTitleResponse.self, from: data)
+                completion(.success(results.results))
+            }
+            catch{
+               // print("Error : \(error.localizedDescription)")
+                completion(.failure(APIError.failedToGetdata))
+            }
+        }
+        
+        task.resume()
+    }
     
     
 }

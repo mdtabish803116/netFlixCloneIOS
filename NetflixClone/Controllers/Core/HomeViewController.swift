@@ -107,7 +107,6 @@ extension HomeViewController: UITableViewDelegate , UITableViewDataSource{
           case Sections.TrendingTv.rawValue:
                 
             APICaller.shared.getTrendingTvs{ results in
-                  
                 switch results {
                 case .success(let titles):
                     cell.configure(with: titles)
@@ -120,7 +119,6 @@ extension HomeViewController: UITableViewDelegate , UITableViewDataSource{
           case Sections.Popular.rawValue:
             
             APICaller.shared.getPopular{ results in
-                 sleep(5)
                 switch results {
                 case .success(let titles):
                     cell.configure(with: titles)
